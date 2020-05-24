@@ -1,0 +1,35 @@
+version: '3'
+services:
+        myos:
+          image: mysql:latest
+          restart: always
+          environment:
+                MYSQL_ROOT_PASSWORD: rootpass
+                MYSQL_USER: manali
+                MYSQL_PASSWORD: mango
+                MYSQL_DATABASE: db
+          volumes:
+                - mysql_storage_new:/var/lib/html
+
+        owncloudos:
+          image: owncloud:latest
+          environment:
+                Database user: manali
+                Database password: mango
+                Database name: db
+                Database host: myos
+          restart: always
+          volumes:
+                - manalinew:/var/www/html/data
+
+          depends_on:
+                - myos
+          ports:
+                - 8081:80
+volumes:
+        manalinew:
+        mysql_storage_new:
+
+
+
+
